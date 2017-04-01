@@ -5,7 +5,7 @@ import { Maybe } from "../index";
 describe("Maybe", () => {
   
     it("construction", () => {
-        const maybe = new Maybe();
+        const maybe = Maybe.nothing();
 
         expect(maybe).toBeDefined();
     })

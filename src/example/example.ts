@@ -1,4 +1,4 @@
 
 import { Maybe } from "../index";
 
-const maybe = new Maybe()
+const maybe = Maybe.nothing();
