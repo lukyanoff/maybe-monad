@@ -1,21 +1,20 @@
-# Node-Template
+# maybe-monad
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/Roaders/Node-Template.svg)](https://greenkeeper.io/)
-
-Template repo for starting node TS projects
+A Typescript implementation of the Maybe mondad
 
 ## Installation
 
-`npm install --save Node-Template`
+`npm install --save maybe-monad`
 
 ## Tests
 
 Tests can be run as follows:
 
 ```
-git clone https://github.com/Roaders/Node-Template.git
-cd Node-Template
+git clone https://github.com/Roaders/maybe-monad.git
+cd maybe-monad
 npm install
+npm run typings
 npm test
 ```
 
@@ -23,8 +22,9 @@ npm test
 An example can be run as follows:
 
 ```
-git clone https://github.com/Roaders/Node-Template.git
-cd Node-Template
+git clone https://github.com/Roaders/maybe-monad.git
+cd maybe-monad
 npm install
+npm run typings
 npm start
 ```

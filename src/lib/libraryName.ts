@@ -1,4 +1,4 @@
 
-console.log("Hello World from Node-Template");
+console.log("Hello World from maybe-monad");
 
 export var some = "thing";

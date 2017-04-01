@@ -1,7 +1,7 @@
 {
-  "name": "node-template",
+  "name": "maybe-monad",
   "version": "0.0.1",
-  "description": "A Template Node Project",
+  "description": "Typescript implementation of the Maybe monda",
   "main": "index.js",
   "typings": "index.d.ts",
   "scripts": {
@@ -15,15 +15,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Roaders/Node-Template.git"
+    "url": "git+https://github.com/Roaders/maybe-monad.git"
   },
   "keywords": [],
   "author": "Giles Roadnight",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Roaders/Node-Template/issues"
+    "url": "https://github.com/Roaders/maybe-monad/issues"
   },
-  "homepage": "https://github.com/Roaders/Node-Template#readme",
+  "homepage": "https://github.com/Roaders/maybe-monad#readme",
   "devDependencies": {
     "jasmine": "2.5.2",
     "typescript": "2.2.2",

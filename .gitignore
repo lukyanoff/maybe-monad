@@ -1,0 +1,13 @@
+
+example/*.js
+lib/*.js
+test/*.js
+
+node_modules/**/*
+typings/**/*
+
+*.d.ts
+
+*.js.map
+
+index\.js
