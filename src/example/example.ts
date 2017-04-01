@@ -1,3 +1,4 @@
 
+import { Maybe } from "../index";
 
-console.log("Hello World from Example");
+const maybe = new Maybe()
