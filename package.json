@@ -25,8 +25,8 @@
   },
   "homepage": "https://github.com/Roaders/maybe-monad#readme",
   "devDependencies": {
-    "jasmine": "2.5.2",
+    "jasmine": "2.5.3",
     "typescript": "2.2.2",
-    "typings": "2.0.0"
+    "typings": "2.1.0"
   }
 }
