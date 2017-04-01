@@ -1,2 +1,30 @@
-# MaybeMonad
-A Typescript implementation of the Maybe monad
+# Node-Template
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/Roaders/Node-Template.svg)](https://greenkeeper.io/)
+
+Template repo for starting node TS projects
+
+## Installation
+
+`npm install --save Node-Template`
+
+## Tests
+
+Tests can be run as follows:
+
+```
+git clone https://github.com/Roaders/Node-Template.git
+cd Node-Template
+npm install
+npm test
+```
+
+## Example
+An example can be run as follows:
+
+```
+git clone https://github.com/Roaders/Node-Template.git
+cd Node-Template
+npm install
+npm start
+```
