@@ -1,6 +1,8 @@
 # maybe-monad
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/Roaders/maybe-monad.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.org/Roaders/maybe-monad.svg?branch=master)](https://travis-ci.org/Roaders/maybe-monad)
+
 
 A Typescript implementation of the Maybe mondad
 
