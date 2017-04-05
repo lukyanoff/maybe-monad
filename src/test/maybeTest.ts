@@ -67,6 +67,8 @@ describe("Maybe", () => {
 
     describe("nothing", () => {
 
+        const expectedNothingError = "Unable to access value of a nothing Maybe. Use defaultTo instead.";
+
         it("should construct a nothing maybe of type string", () => {
             const maybe = Maybe.nothing<string>();
 
@@ -83,6 +85,12 @@ describe("Maybe", () => {
             const maybe = Maybe.nothing<undefined>();
 
             expect(maybe.isNothing).toBeTruthy();
+        });
+
+        it("should throw an error when value is accessed on a nothing maybe", () => {
+            const maybe = Maybe.nothing<string>();
+
+            expect(() => maybe.value).toThrowError(expectedNothingError);
         });
     });
 
@@ -209,38 +217,34 @@ describe("Maybe", () => {
         describe("mapAllowNull", () => {
 
             it("should produce a Maybe with given value", () => {
-                const mappedMaybe = maybe.map(v => returnUnknownType("Goodbye"));
+                const mappedMaybe = maybe.mapAllowNull(v => returnUnknownType("Goodbye"));
 
                 expect(mappedMaybe.isNothing).toBeFalsy();
                 expect(mappedMaybe.value).toEqual("Goodbye");
-                //  No compile errors here as mappedMaybe is typed as IMaybe<string> not IMaybe<string | null>
-                expect(mappedMaybe.value.length).toBe(7);
             });
 
             it("should produce a Maybe with given value when passed null", () => {
-                const mappedMaybe = maybe.map(v => returnUnknownType(null));
+                const mappedMaybe = maybe.mapAllowNull(v => returnUnknownType(null));
 
                 expect(mappedMaybe.isNothing).toBeFalsy();
                 expect(mappedMaybe.value).toBeNull()
-                //  No compile errors here as mappedMaybe is typed as IMaybe<string> not IMaybe<string | null>
-                expect(() => mappedMaybe.value.length).toThrow();
             });
 
             it("should produce a Maybe with given value when passed undefined", () => {
-                const mappedMaybe = maybe.map(v => returnUnknownType(undefined));
+                const mappedMaybe = maybe.mapAllowNull(v => returnUnknownType(undefined));
 
                 expect(mappedMaybe.isNothing).toBeFalsy();
                 expect(mappedMaybe.value).toBeUndefined()
-                //  No compile errors here as mappedMaybe is typed as IMaybe<string> not IMaybe<string | null>
-                expect(() => mappedMaybe.value.length).toThrow();
             });
-
         });
     });
 
-
     describe("do", () => {
         let functionExecuted: boolean;
+
+        beforeEach(() => {
+            functionExecuted = false;
+        });
 
         it("should execute the given function when Maybe is valid", () => {
             Maybe.justAllowNull<string>("Hello")
@@ -259,6 +263,10 @@ describe("Maybe", () => {
 
     describe("elseDo", () => {
         let functionExecuted: boolean;
+
+        beforeEach(() => {
+            functionExecuted = false;
+        });
 
         it("should not execute the given function when Maybe is valid", () => {
             Maybe.justAllowNull<string>("Hello")
@@ -326,7 +334,7 @@ describe("Maybe", () => {
 
             expect(maybe.isNothing).toBeTruthy();
             //  No compile errors here as mappedMaybe is typed as IMaybe<string> not IMaybe<string | null>
-            expect(maybe.value.length).toThrow();
+            expect(() => maybe.value.length).toThrow();
         });
 
         it("should return a nothing maybe if maybe is nothing and undefined passed", () => {
@@ -335,7 +343,7 @@ describe("Maybe", () => {
 
             expect(maybe.isNothing).toBeTruthy();
             //  No compile errors here as mappedMaybe is typed as IMaybe<string> not IMaybe<string | null>
-            expect(maybe.value.length).toThrow();
+            expect(() => maybe.value.length).toThrow();
         });
 
     });
@@ -398,6 +406,10 @@ describe("Maybe", () => {
 
         let functionExecuted = false;
 
+        beforeEach(() => {
+            functionExecuted = false;
+        })
+
         function createMaybe(value: number): IMaybe<number> {
             functionExecuted = true;
 
@@ -425,7 +437,8 @@ describe("Maybe", () => {
 
             expect(maybe.isNothing).toBeTruthy();
             expect(functionExecuted).toBeFalsy();
-            expect(maybe.value.toString()).toThrow();
+            //  No compile errors here as maybe is typed as IMaybe<number>
+            expect(() => maybe.value.toString()).toThrow();
         });
 
         it("should return nothing when second maybe is nothing", () => {
@@ -435,7 +448,7 @@ describe("Maybe", () => {
             expect(maybe.isNothing).toBeTruthy();
             expect(functionExecuted).toBeTruthy();
             //  No compile errors here as maybe is typed as IMaybe<number>
-            expect(maybe.value.toString()).toThrow();
+            expect(() => maybe.value.toString()).toThrow();
         });
 
         it("should return a nothing maybe when both maybes are nothing", () => {
@@ -445,7 +458,7 @@ describe("Maybe", () => {
             expect(maybe.isNothing).toBeTruthy();
             expect(functionExecuted).toBeFalsy();
             //  No compile errors here as maybe is typed as IMaybe<number>
-            expect(maybe.value.toString()).toThrow();
+            expect(() => maybe.value.toString()).toThrow();
         });
     });
 
@@ -487,10 +500,8 @@ describe("Maybe", () => {
 
             expect(maybe.isNothing).toBeTruthy();
             //  No compile errors here as mappedMaybe is typed as IMaybe<string> not IMaybe<string | null>
-            expect(maybe.value.length).toThrow();
-
+            expect(() => maybe.value.length).toThrow();
         });
-
     });
 
     describe("defaultTo", () => {
@@ -554,6 +565,7 @@ describe("Maybe", () => {
             const filteredMaybe = maybe.filter(v => false);
 
             expect(filteredMaybe.isNothing).toBeTruthy();
+            expect(() => filteredMaybe.value).toThrow();
         });
     });
 
@@ -586,12 +598,12 @@ describe("Maybe", () => {
             expect(maybe.isNothing).toBeTruthy();
 
             //  check array value types
-            expect(maybe.value[0].length).toThrow();
-            expect(maybe.value[1].toString()).toThrow();
-            expect(maybe.value[2].valueOf()).toThrow();
-            expect(maybe.value[3]).toThrow();
-            expect(maybe.value[4]).toThrow();
-            expect(maybe.value[5].getTime()).toThrow();
+            expect(() => maybe.value[0].length).toThrow();
+            expect(() => maybe.value[1].toString()).toThrow();
+            expect(() => maybe.value[2].valueOf()).toThrow();
+            expect(() => maybe.value[3]).toThrow();
+            expect(() => maybe.value[4]).toThrow();
+            expect(() => maybe.value[5].getTime()).toThrow();
         });
 
         it("should return a nothing maybe when combined with 5 valid maybes, the first of which is nothing", () => {
@@ -600,12 +612,12 @@ describe("Maybe", () => {
             expect(maybe.isNothing).toBeTruthy();
 
             //  check array value types
-            expect(maybe.value[0].length).toThrow();
-            expect(maybe.value[1].toString()).toThrow();
-            expect(maybe.value[2].valueOf()).toThrow();
-            expect(maybe.value[3]).toThrow();
-            expect(maybe.value[4]).toThrow();
-            expect(maybe.value[5].getTime()).toThrow();
+            expect(() => maybe.value[0].length).toThrow();
+            expect(() => maybe.value[1].toString()).toThrow();
+            expect(() => maybe.value[2].valueOf()).toThrow();
+            expect(() => maybe.value[3]).toThrow();
+            expect(() => maybe.value[4]).toThrow();
+            expect(() => maybe.value[5].getTime()).toThrow();
         });
 
         it("should return a nothing maybe when combined with 5 valid maybes, the second of which is nothing", () => {
@@ -614,12 +626,12 @@ describe("Maybe", () => {
             expect(maybe.isNothing).toBeTruthy();
 
             //  check array value types
-            expect(maybe.value[0].length).toThrow();
-            expect(maybe.value[1].toString()).toThrow();
-            expect(maybe.value[2].valueOf()).toThrow();
-            expect(maybe.value[3]).toThrow();
-            expect(maybe.value[4]).toThrow();
-            expect(maybe.value[5].getTime()).toThrow();
+            expect(() => maybe.value[0].length).toThrow();
+            expect(() => maybe.value[1].toString()).toThrow();
+            expect(() => maybe.value[2].valueOf()).toThrow();
+            expect(() => maybe.value[3]).toThrow();
+            expect(() => maybe.value[4]).toThrow();
+            expect(() => maybe.value[5].getTime()).toThrow();
         });
 
         it("should return a nothing maybe when combined with 5 valid maybes, the third of which is nothing", () => {
@@ -628,12 +640,12 @@ describe("Maybe", () => {
             expect(maybe.isNothing).toBeTruthy();
 
             //  check array value types
-            expect(maybe.value[0].length).toThrow();
-            expect(maybe.value[1].toString()).toThrow();
-            expect(maybe.value[2].valueOf()).toThrow();
-            expect(maybe.value[3]).toThrow();
-            expect(maybe.value[4]).toThrow();
-            expect(maybe.value[5].getTime()).toThrow();
+            expect(() => maybe.value[0].length).toThrow();
+            expect(() => maybe.value[1].toString()).toThrow();
+            expect(() => maybe.value[2].valueOf()).toThrow();
+            expect(() => maybe.value[3]).toThrow();
+            expect(() => maybe.value[4]).toThrow();
+            expect(() => maybe.value[5].getTime()).toThrow();
         });
 
         it("should return a nothing maybe when combined with 5 valid maybes, the forth of which is nothing", () => {
@@ -642,12 +654,12 @@ describe("Maybe", () => {
             expect(maybe.isNothing).toBeTruthy();
 
             //  check array value types
-            expect(maybe.value[0].length).toThrow();
-            expect(maybe.value[1].toString()).toThrow();
-            expect(maybe.value[2].valueOf()).toThrow();
-            expect(maybe.value[3]).toThrow();
-            expect(maybe.value[4]).toThrow();
-            expect(maybe.value[5].getTime()).toThrow();
+            expect(() => maybe.value[0].length).toThrow();
+            expect(() => maybe.value[1].toString()).toThrow();
+            expect(() => maybe.value[2].valueOf()).toThrow();
+            expect(() => maybe.value[3]).toThrow();
+            expect(() => maybe.value[4]).toThrow();
+            expect(() => maybe.value[5].getTime()).toThrow();
         });
 
         it("should return a nothing maybe when combined with 5 valid maybes, the last of which is nothing", () => {
@@ -656,12 +668,12 @@ describe("Maybe", () => {
             expect(maybe.isNothing).toBeTruthy();
 
             //  check array value types
-            expect(maybe.value[0].length).toThrow();
-            expect(maybe.value[1].toString()).toThrow();
-            expect(maybe.value[2].valueOf()).toThrow();
-            expect(maybe.value[3]).toThrow();
-            expect(maybe.value[4]).toThrow();
-            expect(maybe.value[5].getTime()).toThrow();
+            expect(() => maybe.value[0].length).toThrow();
+            expect(() => maybe.value[1].toString()).toThrow();
+            expect(() => maybe.value[2].valueOf()).toThrow();
+            expect(() => maybe.value[3]).toThrow();
+            expect(() => maybe.value[4]).toThrow();
+            expect(() => maybe.value[5].getTime()).toThrow();
         });
 
     });
