@@ -18,7 +18,6 @@ Tests can be run as follows:
 git clone https://github.com/Roaders/maybe-monad.git
 cd maybe-monad
 npm install
-npm run typings
 npm test
 ```
 
@@ -29,6 +28,5 @@ An example can be run as follows:
 git clone https://github.com/Roaders/maybe-monad.git
 cd maybe-monad
 npm install
-npm run typings
 npm start
 ```
