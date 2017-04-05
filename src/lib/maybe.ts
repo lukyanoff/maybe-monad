@@ -235,7 +235,7 @@ export class Maybe<T> implements IMaybe<T>{
     /**
      * executes a function if the maybe is nothing.
      * The function is not executed if the Maybe is valid
-     * Example: Maybe.nullToMaybe(null).elseDo(()) => console.log("no message found"));
+     * Example: Maybe.nullToMaybe(null).elseDo(() => console.log("no message found"));
      * @param action 
      */
     public elseDo(action: () => void ): IMaybe<T>{
@@ -334,7 +334,7 @@ export class Maybe<T> implements IMaybe<T>{
     /**
      * Combines multiple Maybes into one Maybe with a value of an array of all the maybe values
      * If any maybe is nothing a Nothing Maybe will be returned
-     * Example: Maybe.nullToMaybe("Hello").combine(Maybe.NullToMaybe("World")).do(array => console.log(array[0] + " " + array[1])) (logs "Hello World")
+     * Example: Maybe.nullToMaybe("Hello").combine(Maybe.nullToMaybe("World")).do(array => console.log(array[0] + " " + array[1])) (logs "Hello World")
      * @param maybes 
      */
     public combine(... maybes: Maybe<any>[]): IMaybe<any>{
